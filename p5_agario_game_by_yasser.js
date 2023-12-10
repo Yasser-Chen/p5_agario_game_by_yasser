@@ -1,16 +1,16 @@
 //please inisilise thise parameters as u want
-var sizeOfCell = 100; // inisial size of player's cell
+var sizeOfCell = 10; // inisial size of player's cell
 const bulletSize = 20;
 const mapHight = 3500;
 const mapWidth = 2000;
 const step = 10; // how fast should cell moves per somthing sec or ms
 const sizeOfPoint = 10;
 const marginToConfirmEating = 0; // how much you need to confirm you eated another cell
-const numberOfPoints = 20;// between 0 and your RAM capacity jk just calculate ((mapHight * mapWidth) / sizeOfPoint ) - sizeOfCell  and you ll get the maximum number you can write here :D
+const numberOfPoints = 200;// between 0 and your RAM capacity jk just calculate ((mapHight * mapWidth) / sizeOfPoint ) - sizeOfCell  and you ll get the maximum number you can write here :D
 var positionX = 100;
 var positionY = 100;
 const speedReductionRate = 0.07;
-const amountOfGrowWhenEatsAPoint = 30;
+const amountOfGrowWhenEatsAPoint = 10;
 const bulletStep = step * 2; // must stay bigger than step to prevent instantly eating your bullet
 const bulletMass = 10;
 //end please
@@ -123,30 +123,33 @@ function draw() {
   // section is only for bullet spawning
   if (keyCode === 87) {
     keyCode = null;
-    const dx = mouseX - positionX;
-    const dy = mouseY - positionY;
+    if (sizeOfCell > bulletMass) { // if (true || sizeOfCell > bulletMass) { //  insane self feeding bug when your cell is too mall , unbleavable but it happens because the mass is negative and reducing size makes it larger and eat more , because in p5 , you have give diamettre negative and it draws it as if it was positive ! witch should be an error because it made this bug possible and undetectable
+      const dx = mouseX - positionX;
+      const dy = mouseY - positionY;
 
-    // Normalize direction vector
-    const magnitude = Math.sqrt(dx * dx + dy * dy);
-    const normalizedDx = dx / magnitude;
-    const normalizedDy = dy / magnitude;
+      // Normalize direction vector
+      const magnitude = Math.sqrt(dx * dx + dy * dy);
+      const normalizedDx = dx / magnitude;
+      const normalizedDy = dy / magnitude;
 
-    // Calculate bullet spawn position on border
-    const offsetX = normalizedDx * sizeOfCell / 2;
-    const offsetY = normalizedDy * sizeOfCell / 2;
+      // Calculate bullet spawn position on border
+      const offsetX = normalizedDx * sizeOfCell / 2;
+      const offsetY = normalizedDy * sizeOfCell / 2;
 
-    // Initialize bullet properties with initial speed
-    const bullet = {
-      x: positionX + offsetX,
-      y: positionY + offsetY,
-      dx: bulletStep * normalizedDx,
-      dy: bulletStep * normalizedDy,
-      size: bulletSize,
-      speedReductionRate: speedReductionRate, // Rate of speed reduction
-    };
+      // Initialize bullet properties with initial speed
+      const bullet = {
+        x: positionX + offsetX,
+        y: positionY + offsetY,
+        dx: bulletStep * normalizedDx,
+        dy: bulletStep * normalizedDy,
+        size: bulletSize,
+        speedReductionRate: speedReductionRate, // Rate of speed reduction
+      };
 
-    tabOfBullets.push(bullet);
-    sizeOfCell -= bulletMass;
+      tabOfBullets.push(bullet);
+
+      sizeOfCell -= bulletMass;
+    }
   }
 
   //section is for bullet managing 
