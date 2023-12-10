@@ -1,8 +1,8 @@
 //please inisilise thise parameters as u want
-var sizeOfCell = 500; // inisial size of player's cell
+var sizeOfCell = 100; // inisial size of player's cell
 const bulletSize = 20;
-const mapHight = 350;
-const mapWidth = 200;
+const mapHight = 3500;
+const mapWidth = 2000;
 const step = 10; // how fast should cell moves per somthing sec or ms
 const sizeOfPoint = 10;
 const marginToConfirmEating = 0; // how much you need to confirm you eated another cell
